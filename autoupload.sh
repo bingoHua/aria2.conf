@@ -169,7 +169,7 @@ fi
 if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 普通单文件下载，移动文件到设定的网盘文件夹。
 	filename=$(basename "$FILE_PATH")
 	extension="${filename##*.}"
-	filename="${$FILE_PATH%.*}"
+	filename="${filename%.*}"
 	if [ "${extension}" = "zip" ] || [ "${extension}" = "rar" ]; then
 		UPLOAD_PATH="${filename}"
 	else
