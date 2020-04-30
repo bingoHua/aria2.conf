@@ -12,10 +12,10 @@
 ## 基础设置 ##
 
 # Rclone 配置时填写的网盘名(name)
-DRIVE_NAME='Onedrive'
+DRIVE_NAME='hua_develop'
 
 # 网盘目录。即上传目标路径，留空为网盘根目录，末尾不要有斜杠。
-DRIVE_PATH='/DRIVEX/Download'
+DRIVE_PATH=''
 
 # Aria2下载目录
 # Aria2 一键安装管理脚本使用选项统一进行修改。
@@ -59,6 +59,7 @@ export RCLONE_RETRIES_SLEEP=30s
 # RCLONE 异常退出重试次数
 RETRY_NUM=3
 
+source /etc/profile
 #============================================================
 
 FILE_PATH=$3                                          # Aria2传递给脚本的文件路径。BT下载有多个文件时该值为文件夹内第一个文件，如/root/Download/a/b/1.mp4
@@ -99,12 +100,16 @@ UPLOAD_FILE() {
             echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed! Retry ${RETRY}/${RETRY_NUM} ..."
             echo
         )
+	
+        python -c 'import decompression; decompression.operation("'$DOWNLOAD_PATH'")'
+
         rclone move -v "${UPLOAD_PATH}" "${REMOTE_PATH}"
         RCLONE_EXIT_CODE=$?
         if [ ${RCLONE_EXIT_CODE} -eq 0 ]; then
             [ -e "${DOT_ARIA2_FILE}" ] && rm -vf "${DOT_ARIA2_FILE}"
             rclone rmdirs -v "${DOWNLOAD_PATH}" --leave-root
             echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Upload done: ${UPLOAD_PATH}"
+            curl -d "text=上传成功 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
             break
         else
             RETRY=$((${RETRY} + 1))
@@ -112,6 +117,7 @@ UPLOAD_FILE() {
                 echo
                 echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed: ${UPLOAD_PATH}"
                 echo
+                curl -d "text=上传失败 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
             )
             sleep 3
         fi
@@ -120,6 +126,7 @@ UPLOAD_FILE() {
 
 UPLOAD() {
     echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Start upload..."
+    curl -d "text=开始上传 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221 
     TASK_INFO
     UPLOAD_FILE
 }
@@ -161,7 +168,7 @@ fi
 
 if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 普通单文件下载，移动文件到设定的网盘文件夹。
     UPLOAD_PATH="${FILE_PATH}"
-    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"
+    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"	
     UPLOAD
     exit 0
 elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -gt 1 ]; then # BT下载（文件夹内文件数大于1），移动整个文件夹到设定的网盘文件夹。
