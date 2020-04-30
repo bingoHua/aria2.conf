@@ -23,7 +23,7 @@ def operation(path):
                 print("check file " + os.path.join(root, name) + ".aria2 exists")
                 if os.path.exists(os.path.join(root, name) + ".aria2") is not True:
                     unzip_file(os.path.join(root, name), os.path.join(root, os.path.splitext(name)[0]))
-                    print("unzip file:" + os.path.join(root, name))
+                    print("unzip file=" + os.path.join(root, name))
                     os.remove(os.path.join(root, name))
                     print("delete file:" + name)
                 else:
@@ -38,3 +38,4 @@ def operation(path):
                     print("delete file:" + name)
                 else:
                     print(name + "dose not download complete.")
+

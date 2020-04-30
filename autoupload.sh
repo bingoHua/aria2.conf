@@ -75,7 +75,7 @@ ERROR="[${RED_FONT_PREFIX}ERROR${FONT_COLOR_SUFFIX}]"
 WARRING="[${YELLOW_FONT_PREFIX}WARRING${FONT_COLOR_SUFFIX}]"
 
 TASK_INFO() {
-    echo -e "
+	echo -e "
 -------------------------- [${YELLOW_FONT_PREFIX}TASK INFO${FONT_COLOR_SUFFIX}] --------------------------
 ${LIGHT_PURPLE_FONT_PREFIX}Download path:${FONT_COLOR_SUFFIX} ${DOWNLOAD_PATH}
 ${LIGHT_PURPLE_FONT_PREFIX}File path:${FONT_COLOR_SUFFIX} ${FILE_PATH}
@@ -86,57 +86,57 @@ ${LIGHT_PURPLE_FONT_PREFIX}Remote path:${FONT_COLOR_SUFFIX} ${REMOTE_PATH}
 }
 
 CLEAN_UP() {
-    [[ -n ${MIN_SIZE} || -n ${INCLUDE_FILE} || -n ${EXCLUDE_FILE} ]] && echo -e "${INFO} Clean up excluded files ..."
-    [[ -n ${MIN_SIZE} ]] && rclone delete -v "${UPLOAD_PATH}" --max-size ${MIN_SIZE}
-    [[ -n ${INCLUDE_FILE} ]] && rclone delete -v "${UPLOAD_PATH}" --exclude "*.{${INCLUDE_FILE}}"
-    [[ -n ${EXCLUDE_FILE} ]] && rclone delete -v "${UPLOAD_PATH}" --include "*.{${EXCLUDE_FILE}}"
+	[[ -n ${MIN_SIZE} || -n ${INCLUDE_FILE} || -n ${EXCLUDE_FILE} ]] && echo -e "${INFO} Clean up excluded files ..."
+	[[ -n ${MIN_SIZE} ]] && rclone delete -v "${UPLOAD_PATH}" --max-size ${MIN_SIZE}
+	[[ -n ${INCLUDE_FILE} ]] && rclone delete -v "${UPLOAD_PATH}" --exclude "*.{${INCLUDE_FILE}}"
+	[[ -n ${EXCLUDE_FILE} ]] && rclone delete -v "${UPLOAD_PATH}" --include "*.{${EXCLUDE_FILE}}"
 }
 
 UPLOAD_FILE() {
-    RETRY=0
-    while [ ${RETRY} -le ${RETRY_NUM} ]; do
-        [ ${RETRY} != 0 ] && (
-            echo
-            echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed! Retry ${RETRY}/${RETRY_NUM} ..."
-            echo
-        )
-	
-        python -c 'import decompression; decompression.operation("'$DOWNLOAD_PATH'")'
+	RETRY=0
+	while [ ${RETRY} -le ${RETRY_NUM} ]; do
+		[ ${RETRY} != 0 ] && (
+			echo
+			echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed! Retry ${RETRY}/${RETRY_NUM} ..."
+			echo
+		)
 
-        rclone move -v "${UPLOAD_PATH}" "${REMOTE_PATH}"
-        RCLONE_EXIT_CODE=$?
-        if [ ${RCLONE_EXIT_CODE} -eq 0 ]; then
-            [ -e "${DOT_ARIA2_FILE}" ] && rm -vf "${DOT_ARIA2_FILE}"
-            rclone rmdirs -v "${DOWNLOAD_PATH}" --leave-root
-            echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Upload done: ${UPLOAD_PATH}"
-            curl -d "text=上传成功 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
-            break
-        else
-            RETRY=$((${RETRY} + 1))
-            [ ${RETRY} -gt ${RETRY_NUM} ] && (
-                echo
-                echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed: ${UPLOAD_PATH}"
-                echo
-                curl -d "text=上传失败 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
-            )
-            sleep 3
-        fi
-    done
+		python -c 'import decompression; decompression.operation("'$DOWNLOAD_PATH'")'
+
+		rclone move -v "${UPLOAD_PATH}" "${REMOTE_PATH}"
+		RCLONE_EXIT_CODE=$?
+		if [ ${RCLONE_EXIT_CODE} -eq 0 ]; then
+			[ -e "${DOT_ARIA2_FILE}" ] && rm -vf "${DOT_ARIA2_FILE}"
+			rclone rmdirs -v "${DOWNLOAD_PATH}" --leave-root
+			echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Upload done: ${UPLOAD_PATH}"
+			curl -d "text=上传成功 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+			break
+		else
+			RETRY=$((${RETRY} + 1))
+			[ ${RETRY} -gt ${RETRY_NUM} ] && (
+				echo
+				echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed: ${UPLOAD_PATH}"
+				echo
+				curl -d "text=上传失败 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+			)
+			sleep 3
+		fi
+	done
 }
 
 UPLOAD() {
-    echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Start upload..."
-    curl -d "text=开始上传 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221 
-    TASK_INFO
-    UPLOAD_FILE
+	echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Start upload..."
+	curl -d "text=开始上传 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+	TASK_INFO
+	UPLOAD_FILE
 }
 
 if [ -z $2 ]; then
-    echo && echo -e "${ERROR} This script can only be used by passing parameters through Aria2."
-    echo && echo -e "${WARRING} 直接运行此脚本可能导致无法开机！"
-    exit 1
+	echo && echo -e "${ERROR} This script can only be used by passing parameters through Aria2."
+	echo && echo -e "${WARRING} 直接运行此脚本可能导致无法开机！"
+	exit 1
 elif [ $2 -eq 0 ]; then
-    exit 0
+	exit 0
 fi
 
 echo
@@ -161,27 +161,34 @@ Blog: https://p3terx.com
 echo
 
 if [ -e "${FILE_PATH}.aria2" ]; then
-    DOT_ARIA2_FILE="${FILE_PATH}.aria2"
+	DOT_ARIA2_FILE="${FILE_PATH}.aria2"
 elif [ -e "${TOP_PATH}.aria2" ]; then
-    DOT_ARIA2_FILE="${TOP_PATH}.aria2"
+	DOT_ARIA2_FILE="${TOP_PATH}.aria2"
 fi
 
 if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 普通单文件下载，移动文件到设定的网盘文件夹。
-    UPLOAD_PATH="${FILE_PATH}"
-    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"	
-    UPLOAD
-    exit 0
+	filename=$(basename "$FILE_PATH")
+	extension="${filename##*.}"
+	filename="${$FILE_PATH%.*}"
+	if [ "${extension}" = "zip" ] || [ "${extension}" = "rar" ]; then
+		UPLOAD_PATH="${filename}"
+	else
+		UPLOAD_PATH="${FILE_PATH}"
+	fi
+	REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"
+	UPLOAD
+	exit 0
 elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -gt 1 ]; then # BT下载（文件夹内文件数大于1），移动整个文件夹到设定的网盘文件夹。
-    UPLOAD_PATH="${TOP_PATH}"
-    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}"
-    CLEAN_UP
-    UPLOAD
-    exit 0
+	UPLOAD_PATH="${TOP_PATH}"
+	REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}"
+	CLEAN_UP
+	UPLOAD
+	exit 0
 elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 第三方度盘工具下载（子文件夹或多级目录等情况下的单文件下载）、BT下载（文件夹内文件数等于1），移动文件到设定的网盘文件夹下的相同路径文件夹。
-    UPLOAD_PATH="${FILE_PATH}"
-    REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%/*}"
-    UPLOAD
-    exit 0
+	UPLOAD_PATH="${FILE_PATH}"
+	REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%/*}"
+	UPLOAD
+	exit 0
 fi
 
 echo -e "${ERROR} Unknown error."
