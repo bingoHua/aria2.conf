@@ -10,6 +10,7 @@ def unzip_file(zip_src, dst_dir):
         fz = zipfile.ZipFile(zip_src, 'r')
         for file in fz.namelist():
             fz.extract(file, dst_dir)
+	print('unzip success!!')
     else:
         print('This is not zip')
 
@@ -25,7 +26,7 @@ def operation(path):
                     print("unzip file=" + os.path.join(root, name))
                     print("test log")
                     unzip_file(os.path.join(root, name), os.path.join(root, os.path.splitext(name)[0]))
-                    print("delete file:" + name)
+                    print("delete file:" + os.path.join(name))
                     print("current file path" + os.path.join(root, os.path.splitext(name)[0]))
                     os.remove(os.path.join(root, name))
                 else:
