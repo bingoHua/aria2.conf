@@ -173,7 +173,7 @@ if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 普通单文件下
 	extension="${filename##*.}"
 	filename="${filename%.*}"
 	if [ "${extension}" = "zip" ] || [ "${extension}" = "rar" ]; then
-		UPLOAD_PATH="${filename}"
+		UPLOAD_PATH="${FILE_PATH%.*}"
 	else
 		UPLOAD_PATH="${FILE_PATH}"
 	fi
