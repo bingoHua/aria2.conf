@@ -175,7 +175,7 @@ if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 普通单文件下
 	else
 		UPLOAD_PATH="${FILE_PATH}"
 	fi
-	echo -e "UPLOAD_PATH={$UPLOAD_PATH}"
+	echo -e "UPLOAD_PATH=${UPLOAD_PATH}"
 	REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"
 	UPLOAD
 	exit 0

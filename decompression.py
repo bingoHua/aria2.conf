@@ -22,10 +22,11 @@ def operation(path):
             if file_extension == ".zip":
                 print("check file " + os.path.join(root, name) + ".aria2 exists")
                 if os.path.exists(os.path.join(root, name) + ".aria2") is not True:
-                    unzip_file(os.path.join(root, name), os.path.join(root, os.path.splitext(name)[0]))
                     print("unzip file=" + os.path.join(root, name))
-                    os.remove(os.path.join(root, name))
+                    unzip_file(os.path.join(root, name), os.path.join(root, os.path.splitext(name)[0]))
                     print("delete file:" + name)
+                    print("current file path" + os.path.join(root, os.path.splitext(name)[0]))
+                    os.remove(os.path.join(root, name))
                 else:
                     print(name + " dose not download complete.")
             elif file_extension == ".rar":
@@ -38,4 +39,3 @@ def operation(path):
                     print("delete file:" + name)
                 else:
                     print(name + "dose not download complete.")
-
