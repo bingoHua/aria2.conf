@@ -23,6 +23,7 @@ def operation(path):
                 print("check file " + os.path.join(root, name) + ".aria2 exists")
                 if os.path.exists(os.path.join(root, name) + ".aria2") is not True:
                     print("unzip file=" + os.path.join(root, name))
+                    print("test log")
                     unzip_file(os.path.join(root, name), os.path.join(root, os.path.splitext(name)[0]))
                     print("delete file:" + name)
                     print("current file path" + os.path.join(root, os.path.splitext(name)[0]))

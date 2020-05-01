@@ -103,6 +103,8 @@ UPLOAD_FILE() {
 
 		python -c 'import decompression; decompression.operation("'$DOWNLOAD_PATH'")'
 
+		echo -e "UPLOAD_PATH=${UPLOAD_PATH}"
+
 		rclone move -v "${UPLOAD_PATH}" "${REMOTE_PATH}"
 		RCLONE_EXIT_CODE=$?
 		if [ ${RCLONE_EXIT_CODE} -eq 0 ]; then
