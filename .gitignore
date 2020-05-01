@@ -1,2 +1,8 @@
 aria2.log
 aria2.session
+*.pyc
+*.iml
+.idea/
+*.lock
+Pipfile
+dht.dat
