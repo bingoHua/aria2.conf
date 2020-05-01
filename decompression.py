@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 import zipfile
-from unrar import rarfile
+#from unrar import rarfile
 
 
 def unzip_file(zip_src, dst_dir):
@@ -10,7 +10,7 @@ def unzip_file(zip_src, dst_dir):
         fz = zipfile.ZipFile(zip_src, 'r')
         for file in fz.namelist():
             fz.extract(file, dst_dir)
-	print('unzip success!!')
+        print('unzip success!!')
     else:
         print('This is not zip')
 
