@@ -111,7 +111,7 @@ UPLOAD_FILE() {
 			[ -e "${DOT_ARIA2_FILE}" ] && rm -vf "${DOT_ARIA2_FILE}"
 			rclone rmdirs -v "${DOWNLOAD_PATH}" --leave-root
 			echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Upload done: ${UPLOAD_PATH}"
-			curl -d "text=上传成功 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+			curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
 			break
 		else
 			RETRY=$((${RETRY} + 1))
@@ -119,7 +119,7 @@ UPLOAD_FILE() {
 				echo
 				echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed: ${UPLOAD_PATH}"
 				echo
-				curl -d "text=上传失败 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+				curl -d "text=上传失败 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
 			)
 			sleep 3
 		fi
@@ -128,7 +128,7 @@ UPLOAD_FILE() {
 
 UPLOAD() {
 	echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Start upload..."
-	curl -d "text=开始上传 filePath=$FILE_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+	curl -d "text=开始上传 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
 	TASK_INFO
 	UPLOAD_FILE
 }
