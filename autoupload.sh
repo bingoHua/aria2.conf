@@ -105,11 +105,11 @@ UPLOAD_FILE() {
 
 		echo -e "UPLOAD_PATH=${UPLOAD_PATH}"
 
-		rclone move -v "${UPLOAD_PATH}" "${REMOTE_PATH}"
+		rclone move -vv --log-file=/root/rclone.log "${UPLOAD_PATH}" "${REMOTE_PATH}"
 		RCLONE_EXIT_CODE=$?
 		if [ ${RCLONE_EXIT_CODE} -eq 0 ]; then
 			[ -e "${DOT_ARIA2_FILE}" ] && rm -vf "${DOT_ARIA2_FILE}"
-			rclone rmdirs -v "${DOWNLOAD_PATH}" --leave-root
+			rclone rmdirs -vv --log-file=/root/rclone.log "${DOWNLOAD_PATH}" --leave-root
 			echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Upload done: ${UPLOAD_PATH}"
 			curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
 			break
@@ -174,11 +174,11 @@ if [ "${TOP_PATH}" = "${FILE_PATH}" ] && [ $2 -eq 1 ]; then # 普通单文件下
 	filename="${filename%.*}"
 	if [ "${extension}" = "zip" ] || [ "${extension}" = "rar" ]; then
 		UPLOAD_PATH="${FILE_PATH%.*}"
+	        REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}/${REMOVE_DOWNLOAD_PATH%%/*}"
 	else
 		UPLOAD_PATH="${FILE_PATH}"
+	        REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"
 	fi
-	echo -e "UPLOAD_PATH=${UPLOAD_PATH}"
-	REMOTE_PATH="${DRIVE_NAME}:${DRIVE_PATH}"
 	UPLOAD
 	exit 0
 elif [ "${TOP_PATH}" != "${FILE_PATH}" ] && [ $2 -gt 1 ]; then # BT下载（文件夹内文件数大于1），移动整个文件夹到设定的网盘文件夹。
