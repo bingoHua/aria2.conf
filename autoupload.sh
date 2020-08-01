@@ -20,7 +20,7 @@ DRIVE_PATH=''
 # Aria2下载目录
 # Aria2 一键安装管理脚本使用选项统一进行修改。
 # Aria2 Pro Docker 镜像无需修改，通过目录映射进行设置。
-DOWNLOAD_PATH='/root/Download'
+DOWNLOAD_PATH='/root/downloads'
 
 ## 文件过滤 ##
 
@@ -111,7 +111,9 @@ UPLOAD_FILE() {
 			[ -e "${DOT_ARIA2_FILE}" ] && rm -vf "${DOT_ARIA2_FILE}"
 			rclone rmdirs -vv --log-file=/root/rclone.log "${DOWNLOAD_PATH}" --leave-root
 			echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Upload done: ${UPLOAD_PATH}"
-			curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+			#curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+		        curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://sc.ftqq.com/SCU59297Te575dee6a2c0bce33b5c2defcc4b68e75d7120c69797c.send
+			curl https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage?chat_id=520800871&text="text=上传成功 filePath=$UPLOAD_PATH"
 			break
 		else
 			RETRY=$((${RETRY} + 1))
@@ -119,7 +121,9 @@ UPLOAD_FILE() {
 				echo
 				echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed: ${UPLOAD_PATH}"
 				echo
-				curl -d "text=上传失败 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+				#curl -d "text=上传失败 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+				curl -d "text=上传失败 filePath=$UPLOAD_PATH" -X POST  https://sc.ftqq.com/SCU59297Te575dee6a2c0bce33b5c2defcc4b68e75d7120c69797c.send
+				curl https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage?chat_id=520800871&text="text=上传失败 filePath=$UPLOAD_PATH"
 			)
 			sleep 3
 		fi
@@ -129,6 +133,8 @@ UPLOAD_FILE() {
 UPLOAD() {
 	echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Start upload..."
 	curl -d "text=开始上传 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+	curl -d "text=开始上传 filePath=$UPLOAD_PATH" -X POST  https://sc.ftqq.com/SCU59297Te575dee6a2c0bce33b5c2defcc4b68e75d7120c69797c.send
+	curl https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage?chat_id=520800871&text="text=开始上传 filePath=$UPLOAD_PATH"
 	TASK_INFO
 	UPLOAD_FILE
 }
