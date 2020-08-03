@@ -115,7 +115,8 @@ UPLOAD_FILE() {
 			rclone rmdirs -vv --log-file=/root/rclone.log "${DOWNLOAD_PATH}" --leave-root
 			echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Upload done: ${UPLOAD_PATH}"
 			#curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
-		        #curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://sc.ftqq.com/SCU59297Te575dee6a2c0bce33b5c2defcc4b68e75d7120c69797c.send
+		    #curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://sc.ftqq.com/SCU59297Te575dee6a2c0bce33b5c2defcc4b68e75d7120c69797c.send
+		    python -c 'import postpy; postpy.main("'"上传成功 FilePath=$UPLOAD_PATH"'")'
 			curl 'https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage?chat_id=520800871&text="text=上传成功 filePath=$UPLOAD_PATH"'
 			break
 		else
@@ -124,10 +125,11 @@ UPLOAD_FILE() {
 				echo
 				echo -e "$(date +"%m/%d %H:%M:%S") ${ERROR} Upload failed: ${UPLOAD_PATH}"
 				echo
-			#	curl -d "text=上传失败 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
+				#curl -d "text=上传失败 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
 				#curl -d "text=上传失败 filePath=$UPLOAD_PATH" -X POST  https://sc.ftqq.com/SCU59297Te575dee6a2c0bce33b5c2defcc4b68e75d7120c69797c.send
-				curl 'https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage?chat_id=520800871&text="text=上传失败 filePath=$UPLOAD_PATH"'
-				curl https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage\?chat_id\=520800871\&text\="text=上传失败 filePath=$UPLOAD_PATH"
+				#curl 'https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage?chat_id=520800871&text="text=上传失败 filePath=$UPLOAD_PATH"'
+				#curl https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage\?chat_id\=520800871\&text\="text=上传失败 filePath=$UPLOAD_PATH"
+				python -c 'import postpy; postpy.main("'"上传失败 FilePath=$UPLOAD_PATH"'")'
 			)
 			sleep 3
 		fi
@@ -138,7 +140,8 @@ UPLOAD() {
 	echo -e "$(date +"%m/%d %H:%M:%S") ${INFO} Start upload..."
 #	curl -d "text=开始上传 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
 #	curl -d "text=开始上传 filePath=$UPLOAD_PATH" -X POST  https://sc.ftqq.com/SCU59297Te575dee6a2c0bce33b5c2defcc4b68e75d7120c69797c.send
-	curl 'https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage\?chat_id\=520800871\&text\="text=开始上传 filePath=$UPLOAD_PATH"'
+	#curl 'https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage\?chat_id\=520800871\&text\="text=开始上传 filePath=$UPLOAD_PATH"'
+	python -c 'import postpy; postpy.main("'"开始上传 FilePath=$UPLOAD_PATH"'")'
 	TASK_INFO
 	UPLOAD_FILE
 }
