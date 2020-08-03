@@ -117,7 +117,7 @@ UPLOAD_FILE() {
 			#curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://tgbot.lbyczf.com/sendMessage/9qvmsf9jk9i2b221
 		    #curl -d "text=上传成功 filePath=$UPLOAD_PATH" -X POST https://sc.ftqq.com/SCU59297Te575dee6a2c0bce33b5c2defcc4b68e75d7120c69797c.send
 		    python -c 'import postpy; postpy.main("'"上传成功 FilePath=$UPLOAD_PATH"'")'
-			curl 'https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage?chat_id=520800871&text="text=上传成功 filePath=$UPLOAD_PATH"'
+			#curl 'https://api.telegram.org/bot1258672142:AAFToNJKap-vYcS1wt7iBEk0vmo86O2bdBs/sendMessage?chat_id=520800871&text="text=上传成功 filePath=$UPLOAD_PATH"'
 			break
 		else
 			RETRY=$((${RETRY} + 1))
